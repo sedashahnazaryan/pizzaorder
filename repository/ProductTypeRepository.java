@@ -1,6 +1,8 @@
 package com.example.pizzamakerservice.repository;
 
+import com.example.pizzamakerservice.model.ProductType;
 import com.example.pizzamakerservice.model.Table;
+import com.example.pizzamakerservice.service.ProductTypeService;
 import com.example.pizzamakerservice.util.SQLConnector;
 
 import java.sql.Connection;
@@ -10,24 +12,23 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TableRepository {
-
-    public Table read(int id) {
+public class ProductTypeRepository {
+    public ProductType read(int id) {
         Connection connection = SQLConnector.getConnection();
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
         try {
-            pstmt = connection.prepareStatement("SELECT * from `table` WHERE id=?");
+            pstmt = connection.prepareStatement("SELECT * FROM `product_type` WHERE id=?");
             pstmt.setInt(1, id);
             resultSet = pstmt.executeQuery();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        Table table=null;
+        ProductType productType=null;
         try{
             while (resultSet.next()){
-                table=mapper(resultSet);
+                productType=mapper(resultSet);
             }
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -39,24 +40,52 @@ public class TableRepository {
         }catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
-        return table;
-
+        return productType;
     }
 
-    public List<Table> readAll() {
+    public ProductType read(String name) {
+        Connection connection = SQLConnector.getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+        try {
+            pstmt = connection.prepareStatement("SELECT * FROM `product_type` WHERE name=?");
+            pstmt.setString(1,name);
+            resultSet = pstmt.executeQuery();
 
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        ProductType productType=null;
+        try{
+            while (resultSet.next()){
+                productType=mapper(resultSet);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        try{
+            pstmt.close();
+            resultSet.close();
+            connection.close();
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        return productType;
+    }
+
+    public List<ProductType> readAll() {
         Connection connection = SQLConnector.getConnection();
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
 
         try {
-            pstmt = connection.prepareStatement("SELECT * from `table`");
+            pstmt = connection.prepareStatement("SELECT * from `product_type`");
             resultSet = pstmt.executeQuery();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
 
-        List<Table> data = mapperList(resultSet);
+        List<ProductType> data = mapperList(resultSet);
 
 
         try {
@@ -70,14 +99,14 @@ public class TableRepository {
         return data;
     }
 
-    public void create(Table table) {
+    public void create(ProductType productType) {
         Connection connection = SQLConnector.getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `table` values (0,?,?,?)");
-            preparedStatement.setInt(1, table.getNumber());
-            preparedStatement.setInt(2, table.getSeats());
-            preparedStatement.setBoolean(3, table.isBusy());
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `product_type` values (0,?)");
+
+            preparedStatement.setString(1, productType.getName());
+
 
             int i = preparedStatement.executeUpdate();
 
@@ -87,16 +116,16 @@ public class TableRepository {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
+
     }
 
-    public Table update(int id, Table table) {
+    public ProductType update(int id, ProductType productType) {
+
         Connection connection = SQLConnector.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `table` SET number = ?, seats = ?, is_busy=? WHERE id = ?");
-            preparedStatement.setInt(1, table.getNumber());
-            preparedStatement.setInt(2, table.getSeats());
-            preparedStatement.setBoolean(3, table.isBusy());
-            preparedStatement.setInt(4, table.getId());
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `product_type` SET name = ? WHERE id = ?");
+            preparedStatement.setString(1,productType.getName());
+            preparedStatement.setInt(2,productType.getId());
 
             int i = preparedStatement.executeUpdate();
 
@@ -112,14 +141,13 @@ public class TableRepository {
             exception.printStackTrace();
         }
 
-        return table;
+        return productType;
     }
 
     public void delete(int id) {
-
         Connection connection = SQLConnector.getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `table` where id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `product_type` where id=?");
             preparedStatement.setInt(1, id);
             int i = preparedStatement.executeUpdate();
 
@@ -128,11 +156,10 @@ public class TableRepository {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-
     }
 
-    private static List<Table> mapperList(ResultSet resultSet) {
-        List<Table> data = new LinkedList<>();
+    private static List<ProductType> mapperList(ResultSet resultSet) {
+        List<ProductType> data = new LinkedList<>();
         try {
             while (resultSet.next()) {
                 data.add(mapper(resultSet));
@@ -143,17 +170,10 @@ public class TableRepository {
         return data;
     }
 
-    private static Table mapper(ResultSet resultSet) {
-        Table t = new Table();
-        try {
-            t.setId(resultSet.getInt("id"));
-            t.setNumber(resultSet.getInt("number"));
-            t.setSeats(resultSet.getInt("seats"));
-            t.setBusy(resultSet.getBoolean("is_busy"));
-
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return t;
+    private static ProductType mapper(ResultSet resultSet) throws SQLException {
+        ProductType productType = new ProductType();
+        productType.setId(resultSet.getInt("id"));
+        productType.setName(resultSet.getString("name"));
+        return productType;
     }
 }

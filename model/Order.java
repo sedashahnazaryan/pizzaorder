@@ -1,7 +1,6 @@
 package com.example.pizzamakerservice.model;
 
 import lombok.*;
-
 @Getter
 @Setter
 @ToString
@@ -9,21 +8,18 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
-
-
-public class Product {
-
+public class Order {
     private int id;
 
-    private int productTypeId;
+    private int tableId;
 
-    private String name;
+    private boolean inProcess;
 
-    private Float price;
+    private int productId;
 
-    private String imagePath;
+    private int quantity;
 
-    private String currency;
-
+    private float amount;
 }
+
+
