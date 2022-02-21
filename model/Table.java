@@ -1,6 +1,5 @@
 package com.example.pizzamakerservice.model;
 
-import java.util.Objects;
 import lombok.*;
 
 @Getter
@@ -17,6 +16,5 @@ public class Table {
     private boolean busy;
 
 
-
-    }
+}
 

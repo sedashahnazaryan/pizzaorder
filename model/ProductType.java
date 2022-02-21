@@ -15,5 +15,4 @@ public class ProductType {
     private String name;
 
 
-
 }

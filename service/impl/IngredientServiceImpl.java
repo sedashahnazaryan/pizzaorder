@@ -20,13 +20,14 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public List<Ingredient> readAll() {return ingredientRepository.readAll();
+    public List<Ingredient> readAll() {
+        return ingredientRepository.readAll();
     }
 
 
     @Override
     public void create(Ingredient ingredient) {
-        if (ingredient==null){
+        if (ingredient == null) {
             return;
         }
         ingredient.setId(0);
@@ -35,7 +36,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient update(int id, Ingredient ingredient) {
-        if (ingredientRepository.read(id)!=null){
+        if (ingredientRepository.read(id) != null) {
             ingredient.setId(id);
             return ingredientRepository.update(ingredient);
         }

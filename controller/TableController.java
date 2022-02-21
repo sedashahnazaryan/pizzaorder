@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TableController  extends HttpServlet {
-
+public class TableController extends HttpServlet {
 
 
     private final TableService tableService = new TableServiceImpl();

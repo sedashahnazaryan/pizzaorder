@@ -1,6 +1,5 @@
 package com.example.pizzamakerservice.controller;
 
-import com.example.pizzamakerservice.model.Product;
 import com.example.pizzamakerservice.model.dto.ProductDto;
 import com.example.pizzamakerservice.service.ProductService;
 import com.example.pizzamakerservice.service.impl.ProductServiceImpl;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class ProductController extends HttpServlet {
     private final ProductService productService = new ProductServiceImpl();

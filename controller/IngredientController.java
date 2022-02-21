@@ -11,11 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class IngredientController extends HttpServlet {
 
@@ -66,9 +63,9 @@ public class IngredientController extends HttpServlet {
         AccessControlOriginFilter.setAccessControlHeaders(resp);
         Ingredient ingr = mapper(req);
 
-        Ingredient update = ingredientService.update(ingr.getId(),ingr);
-        if (update==null){
-            resp.sendError(400,"id not found for update object");
+        Ingredient update = ingredientService.update(ingr.getId(), ingr);
+        if (update == null) {
+            resp.sendError(400, "id not found for update object");
             return;
         }
         resp.getWriter().println(gson.toJson(update));
@@ -77,7 +74,7 @@ public class IngredientController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AccessControlOriginFilter.setAccessControlHeaders(resp);
-        int id= Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         ingredientService.delete(id);
     }
 

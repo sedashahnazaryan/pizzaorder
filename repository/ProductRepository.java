@@ -1,7 +1,6 @@
 package com.example.pizzamakerservice.repository;
 
 import com.example.pizzamakerservice.model.Product;
-import com.example.pizzamakerservice.model.Table;
 import com.example.pizzamakerservice.model.dto.ProductDto;
 import com.example.pizzamakerservice.util.SQLConnector;
 

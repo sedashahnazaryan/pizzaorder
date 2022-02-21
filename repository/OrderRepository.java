@@ -1,7 +1,6 @@
 package com.example.pizzamakerservice.repository;
 
 import com.example.pizzamakerservice.model.Order;
-import com.example.pizzamakerservice.model.Table;
 import com.example.pizzamakerservice.util.SQLConnector;
 
 import java.sql.Connection;
@@ -13,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderRepository {
-
 
 
     public void create(Order order) {

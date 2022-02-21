@@ -5,23 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLConnector {
-    private static final String user="root";
-    private static final String password="";
-    private static final String DB="pizzamakerservicedatabase";
-    private static final String url="jdbc:mysql://localhost:3306/"+DB;
+    private static final String user = "root";
+    private static final String password = "";
+    private static final String DB = "pizzamakerservicedatabase";
+    private static final String url = "jdbc:mysql://localhost:3306/" + DB;
 
-    private static Connection connection=null;
+    private static Connection connection = null;
 
     public SQLConnector() {
     }
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         try {
-            if(connection==null || connection.isClosed()){
+            if (connection == null || connection.isClosed()) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection= DriverManager.getConnection(url,user,password);
+                connection = DriverManager.getConnection(url, user, password);
             }
-        } catch (SQLException | ClassNotFoundException e  ) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connection;

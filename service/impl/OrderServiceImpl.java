@@ -89,4 +89,5 @@ public class OrderServiceImpl implements OrderService {
     public void delete(int tableId) {
 
         orderRepository.delete(tableId);
-    }}
+    }
+}

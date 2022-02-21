@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface TableService {
 
-     Table read(int id);
+    Table read(int id);
 
-     List<Table> readAll();
+    List<Table> readAll();
 
     List<Table> readByBusy(boolean isBusy);
 
-     List<Table> readBySeatCount(int seatCount);
+    List<Table> readBySeatCount(int seatCount);
 
     void create(Table table);
 

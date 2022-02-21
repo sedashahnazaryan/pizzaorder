@@ -1,8 +1,6 @@
 package com.example.pizzamakerservice.repository;
 
 import com.example.pizzamakerservice.model.ProductType;
-import com.example.pizzamakerservice.model.Table;
-import com.example.pizzamakerservice.service.ProductTypeService;
 import com.example.pizzamakerservice.util.SQLConnector;
 
 import java.sql.Connection;
@@ -13,6 +11,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductTypeRepository {
+    private static List<ProductType> mapperList(ResultSet resultSet) {
+        List<ProductType> data = new LinkedList<>();
+        try {
+            while (resultSet.next()) {
+                data.add(mapper(resultSet));
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return data;
+    }
+
+    private static ProductType mapper(ResultSet resultSet) throws SQLException {
+        ProductType productType = new ProductType();
+        productType.setId(resultSet.getInt("id"));
+        productType.setName(resultSet.getString("name"));
+        return productType;
+    }
+
     public ProductType read(int id) {
         Connection connection = SQLConnector.getConnection();
         PreparedStatement pstmt = null;
@@ -25,19 +42,19 @@ public class ProductTypeRepository {
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        ProductType productType=null;
-        try{
-            while (resultSet.next()){
-                productType=mapper(resultSet);
+        ProductType productType = null;
+        try {
+            while (resultSet.next()) {
+                productType = mapper(resultSet);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        try{
+        try {
             pstmt.close();
             resultSet.close();
             connection.close();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return productType;
@@ -49,25 +66,25 @@ public class ProductTypeRepository {
         ResultSet resultSet = null;
         try {
             pstmt = connection.prepareStatement("SELECT * FROM `product_type` WHERE name=?");
-            pstmt.setString(1,name);
+            pstmt.setString(1, name);
             resultSet = pstmt.executeQuery();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        ProductType productType=null;
-        try{
-            while (resultSet.next()){
-                productType=mapper(resultSet);
+        ProductType productType = null;
+        try {
+            while (resultSet.next()) {
+                productType = mapper(resultSet);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        try{
+        try {
             pstmt.close();
             resultSet.close();
             connection.close();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return productType;
@@ -124,8 +141,8 @@ public class ProductTypeRepository {
         Connection connection = SQLConnector.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `product_type` SET name = ? WHERE id = ?");
-            preparedStatement.setString(1,productType.getName());
-            preparedStatement.setInt(2,productType.getId());
+            preparedStatement.setString(1, productType.getName());
+            preparedStatement.setInt(2, productType.getId());
 
             int i = preparedStatement.executeUpdate();
 
@@ -156,24 +173,5 @@ public class ProductTypeRepository {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-    }
-
-    private static List<ProductType> mapperList(ResultSet resultSet) {
-        List<ProductType> data = new LinkedList<>();
-        try {
-            while (resultSet.next()) {
-                data.add(mapper(resultSet));
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return data;
-    }
-
-    private static ProductType mapper(ResultSet resultSet) throws SQLException {
-        ProductType productType = new ProductType();
-        productType.setId(resultSet.getInt("id"));
-        productType.setName(resultSet.getString("name"));
-        return productType;
     }
 }

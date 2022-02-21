@@ -1,17 +1,13 @@
 package com.example.pizzamakerservice.service.impl;
 
-import com.example.pizzamakerservice.model.Ingredient;
 import com.example.pizzamakerservice.model.ProductType;
-import com.example.pizzamakerservice.model.dto.ProductDto;
-import com.example.pizzamakerservice.repository.ProductRepository;
 import com.example.pizzamakerservice.repository.ProductTypeRepository;
 import com.example.pizzamakerservice.service.ProductTypeService;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProductTypeServiceImpl implements ProductTypeService {
-    private final ProductTypeRepository productTypeRepository =new ProductTypeRepository();
+    private final ProductTypeRepository productTypeRepository = new ProductTypeRepository();
 
     @Override
     public ProductType read(int id) {

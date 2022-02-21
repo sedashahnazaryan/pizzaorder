@@ -1,7 +1,6 @@
 package com.example.pizzamakerservice.repository;
 
 import com.example.pizzamakerservice.model.Ingredient;
-import com.example.pizzamakerservice.model.Table;
 import com.example.pizzamakerservice.util.SQLConnector;
 
 import java.sql.Connection;
@@ -12,6 +11,25 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class IngredientRepository {
+    private static List<Ingredient> mapperList(ResultSet resultSet) {
+        List<Ingredient> data = new LinkedList<>();
+        try {
+            while (resultSet.next()) {
+                data.add(mapper(resultSet));
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return data;
+    }
+
+    private static Ingredient mapper(ResultSet resultSet) throws SQLException {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(resultSet.getInt("id"));
+        ingredient.setName(resultSet.getString("name"));
+        return ingredient;
+    }
+
     public Ingredient read(int id) {
 
         Connection connection = SQLConnector.getConnection();
@@ -25,19 +43,19 @@ public class IngredientRepository {
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        Ingredient ingredient=null;
-        try{
-            while (resultSet.next()){
-                ingredient=mapper(resultSet);
+        Ingredient ingredient = null;
+        try {
+            while (resultSet.next()) {
+                ingredient = mapper(resultSet);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        try{
+        try {
             pstmt.close();
             resultSet.close();
             connection.close();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return ingredient;
@@ -50,25 +68,25 @@ public class IngredientRepository {
         ResultSet resultSet = null;
         try {
             pstmt = connection.prepareStatement("SELECT * FROM `ingredient` WHERE name=?");
-            pstmt.setString(1,name);
+            pstmt.setString(1, name);
             resultSet = pstmt.executeQuery();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        Ingredient ingredient=null;
-        try{
-            while (resultSet.next()){
-                ingredient=mapper(resultSet);
+        Ingredient ingredient = null;
+        try {
+            while (resultSet.next()) {
+                ingredient = mapper(resultSet);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        try{
+        try {
             pstmt.close();
             resultSet.close();
             connection.close();
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return ingredient;
@@ -120,8 +138,8 @@ public class IngredientRepository {
         Connection connection = SQLConnector.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `ingredient` SET name = ? WHERE id = ?");
-            preparedStatement.setString(1,ingredient.getName());
-            preparedStatement.setInt(2,ingredient.getId());
+            preparedStatement.setString(1, ingredient.getName());
+            preparedStatement.setInt(2, ingredient.getId());
             int i = preparedStatement.executeUpdate();
             preparedStatement.close();
 
@@ -149,24 +167,5 @@ public class IngredientRepository {
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-    }
-
-    private static List<Ingredient> mapperList(ResultSet resultSet) {
-        List<Ingredient> data = new LinkedList<>();
-        try {
-            while (resultSet.next()) {
-                data.add(mapper(resultSet));
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-        return data;
-    }
-
-    private static Ingredient mapper(ResultSet resultSet) throws SQLException {
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(resultSet.getInt("id"));
-        ingredient.setName(resultSet.getString("name"));
-        return ingredient;
     }
 }

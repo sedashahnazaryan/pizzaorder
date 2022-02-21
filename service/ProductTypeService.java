@@ -1,7 +1,6 @@
 package com.example.pizzamakerservice.service;
 
 import com.example.pizzamakerservice.model.ProductType;
-import com.example.pizzamakerservice.model.dto.ProductDto;
 
 import java.util.List;
 

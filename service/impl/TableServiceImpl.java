@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class TableServiceImpl implements TableService {
 
 
-
     private final TableRepository tableRepository = new TableRepository();
 
 

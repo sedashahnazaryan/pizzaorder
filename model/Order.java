@@ -1,6 +1,7 @@
 package com.example.pizzamakerservice.model;
 
 import lombok.*;
+
 @Getter
 @Setter
 @ToString

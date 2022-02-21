@@ -1,9 +1,6 @@
 package com.example.pizzamakerservice.controller;
 
 import com.example.pizzamakerservice.model.ProductType;
-import com.example.pizzamakerservice.repository.IngredientRepository;
-import com.example.pizzamakerservice.repository.ProductTypeRepository;
-import com.example.pizzamakerservice.repository.TableRepository;
 import com.example.pizzamakerservice.service.ProductTypeService;
 import com.example.pizzamakerservice.service.impl.ProductTypeServiceImpl;
 import com.example.pizzamakerservice.util.AccessControlOriginFilter;
@@ -20,9 +17,9 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ProductTypeController extends HttpServlet {
+    private static Random random = new Random();
     private final ProductTypeService productTypeService = new ProductTypeServiceImpl();
     private List<ProductType> list = new LinkedList<>();
-    private static Random random = new Random();
     private Gson gson = new Gson();
 
 
@@ -77,14 +74,14 @@ public class ProductTypeController extends HttpServlet {
 
         int id = Integer.parseInt(req.getParameter("id"));
 
-        for (int i = 0; i < list.size(); i++){
-            if(list.get(i).getId() == id){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId() == id) {
                 pdtype = list.get(i);
                 break;
             }
         }
 
-        if(pdtype == null){
+        if (pdtype == null) {
             resp.sendError(400, "there is no table with mentioned id");
             return;
         }

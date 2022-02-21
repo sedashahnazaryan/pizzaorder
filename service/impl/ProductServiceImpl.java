@@ -17,7 +17,6 @@ public class ProductServiceImpl implements ProductService {
     ProductToIngredientRepository productToIngredientRepository = new ProductToIngredientRepository();
 
 
-
     @Override
     public Product readProduct(int id) {
         Product product = new Product();
